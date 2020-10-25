@@ -24,8 +24,9 @@
     </a-layout-sider>
 
     <a-layout style="margin-left: 200px">
+      <a-button type="link" shape="round" icon="download" size="small">download</a-button>
       <a-layout-content style="flex-grow: 1; padding: 30px; display: flex">
-        <a-card hoverable style="width: 190px; margin-left: 20px; margin-right: 20px" v-for="book in books" :key='book.name' >
+        <a-card hoverable style="width: 200px; margin-left: 20px; margin-right: 20px; height:450px" v-for="book in books" :key='book.name' >
           <img
             slot="cover"
             alt="example"
@@ -35,6 +36,7 @@
             <template slot="description">{{book.author}}</template>
           </a-card-meta>
           <a-rate v-model="book.rate" :tooltips="desc" allow-half disabled/>
+          <a-button href='https://github.com/Artem-Potapov/Vse_Skazki/archive/_.zip' type="link" shape="round" icon="download" size="small">download</a-button>
         </a-card>
       </a-layout-content>
       <a-layout-footer> Footer </a-layout-footer>
@@ -64,7 +66,7 @@ export default {
   components: {},
   data() {
     return {
-
+      size: 'large',
       desc: ["1", "2", "3", "4", "5"],
       books: [
         { name: "Детство", author: "Л.Н.Толстой", img: 'https://1.bp.blogspot.com/-wWUjjNPVA30/XV7O6j0NwsI/AAAAAAAAAIk/a9zxrJFhPbAvhoReUPvrylLhXpoEAbAjACLcBGAs/s1600/3eb7fe8839702db7e1dd1133a873e8cb.jpg', rate: 4.5 },
@@ -73,7 +75,14 @@ export default {
       ],
     };
   },
+  methods: {
+      handleSizeChange(e) {
+        this.size = e.target.value;
+      },
+    },
+
 };
+
 </script>
 
 <style>
