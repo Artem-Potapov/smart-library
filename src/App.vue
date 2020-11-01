@@ -24,8 +24,8 @@
     </a-layout-sider>
 
     <a-layout style="margin-left: 200px">
-      <a-button type="link" shape="round" icon="download" size="small">download</a-button>
       <a-layout-content style="flex-grow: 1; padding: 30px; display: flex">
+        <router-view/>
         <a-card hoverable style="width: 200px; margin-left: 20px; margin-right: 20px; height:450px" v-for="book in books" :key='book.name' >
           <img
             slot="cover"
@@ -36,7 +36,7 @@
             <template slot="description">{{book.author}}</template>
           </a-card-meta>
           <a-rate v-model="book.rate" :tooltips="desc" allow-half disabled/>
-          <a-button href='https://github.com/Artem-Potapov/Vse_Skazki/archive/_.zip' type="link" shape="round" icon="download" size="small">download</a-button>
+          <a-button :href='book.download' type="link" shape="round" icon="download" download='123' size="small">download</a-button>
         </a-card>
       </a-layout-content>
       <a-layout-footer> Footer </a-layout-footer>
@@ -63,16 +63,21 @@ Vue.use(Rate);
 
 export default {
   name: "App",
+  mounted(){
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', 'http://localhost:5000')
+    xhr.send()
+    xhr.onload = () => {
+      if (xhr.readyState != 4) return
+      this.books = JSON.parse(xhr.response)
+    }
+  },
   components: {},
   data() {
     return {
       size: 'large',
       desc: ["1", "2", "3", "4", "5"],
-      books: [
-        { name: "Детство", author: "Л.Н.Толстой", img: 'https://1.bp.blogspot.com/-wWUjjNPVA30/XV7O6j0NwsI/AAAAAAAAAIk/a9zxrJFhPbAvhoReUPvrylLhXpoEAbAjACLcBGAs/s1600/3eb7fe8839702db7e1dd1133a873e8cb.jpg', rate: 4.5 },
-        { name: "Церная курица", author: "Антоний Погорельский", img: 'https://7960777a-2fd1-4b07-8bbb-896e98c4659c.selcdn.net/upload/prod_add4/961/product-360961-1.jpg', rate: 4 },
-        { name: "В дурном обществе", author: "Владимир Короленко",img: 'https://kapital-knigi.ru/assets/images/products/11893/9785222321089.jpg', rate: 5},
-      ],
+      books: [],
     };
   },
   methods: {
