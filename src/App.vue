@@ -22,11 +22,9 @@
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
-
     <a-layout style="margin-left: 200px">
-      <a-layout-content style="flex-grow: 1; padding: 30px">
+      <a-layout-content style="flex-grow: 1;">
         <router-view/>
-        
       </a-layout-content>
       <a-layout-footer> Footer </a-layout-footer>
     </a-layout>
