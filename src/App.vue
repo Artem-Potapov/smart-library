@@ -26,7 +26,7 @@
       <a-layout-content style="flex-grow: 1;">
         <router-view/>
       </a-layout-content>
-      <a-layout-footer> Footer </a-layout-footer>
+      <a-layout-footer>  </a-layout-footer>
     </a-layout>
   </a-layout>
 </template>

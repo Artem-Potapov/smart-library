@@ -1,14 +1,13 @@
 <template>
   <div style="display: flex">
-    <div style="display: flex; flex-grow: 1; padding: 30px">
+    <div style="display: flex; flex-grow: 1; padding: 30px; flex-wrap: wrap;">
       <a-card
-        hoverable
-        style="
+        hoverable style="
           width: 200px;
           margin-left: 20px;
           margin-right: 20px;
-          height: 450px;
-        "
+          margin-bottom:30px;
+          height: 450px;"
         v-for="book in books"
         :key="book.name"
       >
@@ -36,16 +35,22 @@
         box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
       "
     >
+
       <h4><b>Автор:</b></h4>
-      <a-select style="align-self: flex-start; width: 200px">
+      <a-select style="align-self: flex-start; width: 200px" v-model="filters.author" :defaultValue="1">
+        <a-select-option :key="1">
+          Все авторы
+        </a-select-option>
         <a-select-option
           :value="author"
           v-for="author in authors"
           :key="author"
+          
         >
           {{ author }}
         </a-select-option>
       </a-select>
+      <a-button type='primary' :style="kek" @click="filter">Найти</a-button>
     </div>
   </div>
 </template>
@@ -68,7 +73,7 @@ Vue.use(Select);
 export default {
   name: "Home",
   mounted() {
-    this.$axios.get("http://localhost:5000").then((res) => {
+    this.$axios.get("http://localhost:5000/books").then((res) => {
       this.books = res.data;
     });
     this.$axios.get("http://localhost:5000/authors").then((res) => {
@@ -76,12 +81,24 @@ export default {
     });
   },
   components: {},
+  methods: {
+    filter(){
+      this.$axios.get("http://localhost:5000/books",{ params: {filters: this.filters} }).then((res) => {
+        this.books = res.data;
+      });
+      console.log(this.filters)
+    }
+  },
   data() {
     return {
       size: "large",
       desc: ["1", "2", "3", "4", "5"],
       books: [],
       authors: [],
+      kek: 'display:block; margin-top:10px; margin-left:0;',
+      filters:{
+        author: null,
+      },
     };
   },
 };
