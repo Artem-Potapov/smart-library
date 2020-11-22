@@ -37,8 +37,8 @@
     >
 
       <h4><b>Автор:</b></h4>
-      <a-select style="align-self: flex-start; width: 200px" v-model="filters.author" :defaultValue="1">
-        <a-select-option :key="1">
+      <a-select style="align-self: flex-start; width: 200px" v-model="filters.author" :defaultValue="0">
+        <a-select-option :value="0">
           Все авторы
         </a-select-option>
         <a-select-option
@@ -97,7 +97,7 @@ export default {
       authors: [],
       kek: 'display:block; margin-top:10px; margin-left:0;',
       filters:{
-        author: null,
+        author: 0,
       },
     };
   },
