@@ -1,10 +1,16 @@
 <template>
-  <div>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque rerum porro ea voluptatum! Totam, blanditiis. Dolor sequi, aliquam nostrum ea quis eveniet ratione qui maiores harum, commodi porro voluptas animi?</div>
+  <div v-if="istest">Please, complete test!</div>
+  <div v-else>I like ya cut g</div>
 </template>
 
 <script>
+import Cookies from 'js-cookie'
 export default {
-
+  data() {
+    return{
+      istest: Cookies.get('test_complete') ? false: true
+    }
+  }
 }
 </script>
 
