@@ -79,7 +79,19 @@
           {{ age }}
         </a-select-option>
       </a-select>
-
+      <!-- Рейтинг -->
+            <h4><b>Рейтинг:</b></h4>
+      <a-select
+        style="align-self: flex-start; width: 200px"
+        v-model="filters.age">
+        <a-select-option :value="0"> Любой рейтинг </a-select-option>
+        <a-select-option
+          :value="age"
+          v-for="age in ages"
+          :key="age">
+          {{ age }}
+        </a-select-option>
+      </a-select>
       <a-button type="primary" :style="kek" @click="filter">Найти</a-button>
     </div>
   </div>
@@ -115,9 +127,7 @@ export default {
     this.$axios.get("http://localhost:5000/ages").then((res) => {
       this.ages = res.data;
     });
-    this.$axios.get("http://localhost:5000/rates_from5").then((res) => {
-      this.ratings = res.data;
-    });
+
   },
   components: {},
   methods: {
@@ -139,6 +149,7 @@ export default {
       authors: [],
       genres:[],
       ages:[],
+      ratings: [],
       kek: "display:block; margin-top:10px; margin-left:0;",
       filters: {
         author: 0,
