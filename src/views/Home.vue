@@ -58,38 +58,34 @@
         v-model="filters.genre"
       >
         <a-select-option :value="0"> Все жанры </a-select-option>
-        <a-select-option
-          :value="genre"
-          v-for="genre in genres"
-          :key="genre">
+        <a-select-option :value="genre" v-for="genre in genres" :key="genre">
           {{ genre }}
         </a-select-option>
       </a-select>
-      
+
       <h4><b>Возраст:</b></h4>
       <a-select
         style="align-self: flex-start; width: 200px"
         v-model="filters.age"
       >
         <a-select-option :value="0"> Все возрасты </a-select-option>
-        <a-select-option
-          :value="age"
-          v-for="age in ages"
-          :key="age">
+        <a-select-option :value="age" v-for="age in ages" :key="age">
           {{ age }}
         </a-select-option>
       </a-select>
       <!-- Рейтинг -->
-            <h4><b>Рейтинг:</b></h4>
+      <h4><b>Рейтинг:</b></h4>
       <a-select
         style="align-self: flex-start; width: 200px"
-        v-model="filters.age">
+        v-model="filters.rating"
+      >
         <a-select-option :value="0"> Любой рейтинг </a-select-option>
         <a-select-option
-          :value="age"
-          v-for="age in ages"
-          :key="age">
-          {{ age }}
+          :value="index"
+          v-for="(rating, index) in ratings"
+          :key="index"
+        >
+          {{ rating }}
         </a-select-option>
       </a-select>
       <a-button type="primary" :style="kek" @click="filter">Найти</a-button>
@@ -127,12 +123,12 @@ export default {
     this.$axios.get("http://localhost:5000/ages").then((res) => {
       this.ages = res.data;
     });
-
   },
   components: {},
   methods: {
     filter() {
-      this.$axios.get("http://localhost:5000/books", {
+      this.$axios
+        .get("http://localhost:5000/books", {
           params: { filters: this.filters },
         })
         .then((res) => {
@@ -147,14 +143,20 @@ export default {
       desc: ["1", "2", "3", "4", "5"],
       books: [],
       authors: [],
-      genres:[],
-      ages:[],
-      ratings: [],
+      genres: [],
+      ages: [],
+      ratings: {
+        1: "1+",
+        2: "2+",
+        3: "3+",
+        4: "4+",
+      },
       kek: "display:block; margin-top:10px; margin-left:0;",
       filters: {
         author: 0,
         genre: 0,
         age: 0,
+        rating: 0
       },
     };
   },
