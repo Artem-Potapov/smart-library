@@ -150,6 +150,7 @@ export default {
         2: "2+",
         3: "3+",
         4: "4+",
+        5: "5",
       },
       kek: "display:block; margin-top:10px; margin-left:0;",
       filters: {
