@@ -21,9 +21,9 @@
         shape="round"
         icon="download"
         size="small"
-        >download</a-button
-      >
+        >download</a-button>
     </a-card>
+    <a-button href='http://localhost:8080/favorite' type='primary' shape='round' @click="reTest()">Перепройти тест</a-button>
   </div>
 </template>
 
@@ -31,13 +31,15 @@
 import Vue from "vue";
 import {Rate} from "ant-design-vue";
 import 'ant-design-vue/lib/rate/style/css'
-import Cookie from 'js-cookie'
+import Cookies from 'js-cookie'
+
+
 Vue.use(Rate)
 export default {
   mounted() {
     this.$axios.get("http://localhost:5000/favbooks", {
       params: {
-        testresult: Cookie.get('result')
+        testresult: Cookies.get('result')
       }
     }).then((res) => {
       this.books = res.data;
@@ -47,9 +49,19 @@ export default {
     return {
       books: [],
       desc: [],
+      showtest: Cookies.get('result') ? false : true
     };
   },
-  methods: {},
+  methods: {
+    reTest(){
+      Cookies.remove('result')
+      this.$emit('retest')
+      
+    }
+  },
+  components: {
+  
+  }
 };
 </script>
 
