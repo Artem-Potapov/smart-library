@@ -3,15 +3,8 @@
     <div style="display: flex; flex-grow: 1; padding: 30px; flex-wrap: wrap">
       <a-card
         hoverable
-        style="
-          width: 200px;
-          margin-left: 20px;
-          margin-right: 20px;
-          margin-bottom: 30px;
-          height: 450px;
-        "
-        v-for="book in books"
-        :key="book.name"
+        style="width: 200px; margin-left: 20px; margin-right: 20px; margin-bottom: 30px; height: 450px;"
+        v-for="book in books" :key="book.name"
       >
         <img slot="cover" alt="example" :src="book.img" />
         <a-card-meta :title="book.name">
@@ -23,9 +16,7 @@
           type="link"
           shape="round"
           icon="download"
-          download="123"
-          size="small"
-          >download</a-button
+          size="small">download</a-button
         >
       </a-card>
     </div>

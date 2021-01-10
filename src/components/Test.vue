@@ -4,10 +4,8 @@
       <span slot="title" :class="{ error: iserror && !genres.length }"
         >Какой жанр вам нравится?</span
       >
-      <a-checkbox @change="(e) => onChange(e, 'povest')">Повесть</a-checkbox>
-      <a-checkbox @change="(e) => onChange(e, 'tale')">Сказка</a-checkbox>
-      <a-checkbox @change="(e) => onChange(e, 'roman')">Роман</a-checkbox>
-      <a-checkbox @change="(e) => onChange(e, 'all')">Я не знаю</a-checkbox>
+      <a-checkbox :disabled="genres[0] == 'all'" :checked="genres.includes(genre)" @change="(e) => genreChange(e, genre)" v-for="genre in allGenres" :key="genre">{{genre}}</a-checkbox>
+      <a-checkbox @change="(e) => genreChange(e, 'all')">Я не знаю</a-checkbox>
     </a-card>
     <a-card style="margin: 30px">
       <span slot="title" :class="{ error: iserror && !age }"
@@ -22,8 +20,7 @@
     </a-card>
     <a-card style="margin: 30px">
       <span slot="title" :class="{ error: iserror && !capacity }"
-        >Какой обьем страниц для вас приемлем?</span
-      >
+        >Какой обьем страниц для вас приемлем?</span>
       <a-radio-group v-model="capacity">
         <a-radio :value="50"> До 50 </a-radio>
         <a-radio :value="100"> До 100 </a-radio>
@@ -33,16 +30,15 @@
       </a-radio-group>
     </a-card>
     <a-card style="margin: 30px">
-      <span slot="title" :class="{ error: iserror && !authors.length }"
-        >Какие авторы вам больше по душе?</span
-      >
+      <span slot="title" :class="{ error: iserror && !authors.length }">Какие авторы вам больше по душе?</span>
       <a-checkbox
+        :disabled="authors[0] == 'all'"
+        :checked="authors.includes(author)"
         @change="(e) => authorChange(e, author)"
         v-for="author in allAuthors"
-        :key="author"
-        >{{ author }}</a-checkbox
-      >
-    </a-card>
+        :key="author">{{ author }}</a-checkbox>
+        <a-checkbox @change="(e) => authorChange(e, 'all')"> Мне нравятся все авторы </a-checkbox>
+    </a-card> 
     <a-button type="primary" style="margin: 0px 30px" @click="okay"
       >ОК</a-button
     >
@@ -61,11 +57,78 @@ Vue.use(Card);
 Vue.use(Radio);
 Vue.use(Checkbox);
 Vue.use(Button);
+
 export default {
-  name: 'Test'
-}
+  mounted() {
+    this.$axios.get("http://localhost:5000/authors").then((res) => {
+      this.allAuthors = res.data;
+    });
+    this.$axios.get("http://localhost:5000/genres").then((res) => {
+      this.allGenres = res.data;
+    });
+  },
+  data() {
+    return {
+      age: null,
+      capacity: null,
+      genres: [],
+      allAuthors: [],
+      allGenres: [],
+      authors: [],
+      iserror: false,
+    };
+  },
+
+  methods: {
+    genreChange(e, genre) {
+      if (e.target.checked) {
+        if (genre == 'all'){
+          this.genres = ['all']
+        }
+        else {
+        this.genres.push(genre);
+        }
+      } else {
+        this.genres = this.genres.filter((i) => genre != i);
+      }
+    },
+    authorChange(e, author) {
+      if (e.target.checked) {
+        if (author == 'all') {
+          this.authors = ['all']
+        }
+        else {
+        this.authors.push(author); 
+        }
+      } else {
+        this.authors = this.authors.filter((i) => author != i);
+      }
+    },
+    okay() {
+      if (
+        !this.genres.length ||
+        !this.age ||
+        !this.capacity ||
+        !this.authors.length
+      ) {
+        this.iserror = true;
+        return;
+      }
+      const result = {
+        genres: this.genres,
+        age: this.age,
+        capacity: this.capacity,
+        authors: this.authors
+      };
+      Cookies.set('result', result)
+      this.$emit('testdone')
+    },
+  },
+};
 </script>
 
 <style>
-
+.error {
+  color: rgb(255, 0, 0) !important;
+}
 </style>

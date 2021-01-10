@@ -63,4 +63,5 @@ export default {
 </script>
 
 <style>
+@import url('assets/tailwind.css');
 </style>
