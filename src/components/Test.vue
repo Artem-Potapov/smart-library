@@ -60,10 +60,10 @@ Vue.use(Button);
 
 export default {
   mounted() {
-    this.$axios.get("http://localhost:5000/authors").then((res) => {
+    this.$axios.get("http://musaev-online:5000/authors").then((res) => {
       this.allAuthors = res.data;
     });
-    this.$axios.get("http://localhost:5000/genres").then((res) => {
+    this.$axios.get("http://musaev-online:5000/genres").then((res) => {
       this.allGenres = res.data;
     });
   },

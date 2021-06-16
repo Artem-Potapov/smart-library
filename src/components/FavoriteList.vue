@@ -37,7 +37,7 @@ import Cookies from 'js-cookie'
 Vue.use(Rate)
 export default {
   mounted() {
-    this.$axios.get("http://localhost:5000/favbooks", {
+    this.$axios.get("http://musaev.online:5000/favbooks", {
       params: {
         testresult: Cookies.get('result')
       }
