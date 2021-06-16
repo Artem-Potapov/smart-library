@@ -1,6 +1,6 @@
 <template>
   <test @testdone="istest=false" v-if="istest"/>
-  <favorite-list v-else/>
+  <favorite-list v-else @retest="istest=true"/>
 </template>
 
 <script>

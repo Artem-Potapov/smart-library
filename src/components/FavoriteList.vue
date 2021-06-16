@@ -23,7 +23,7 @@
         size="small"
         >download</a-button>
     </a-card>
-    <a-button href='http://localhost:8080/favorite' type='primary' shape='round' @click="reTest()">Перепройти тест</a-button>
+    <a-button style="position:fixed" class="right-4 bottom-2.5 fixed" type='primary' shape='round' @click="reTest()">Перепройти тест</a-button>
   </div>
 </template>
 
@@ -44,19 +44,18 @@ export default {
     }).then((res) => {
       this.books = res.data;
     });
+
   },
   data() {
     return {
       books: [],
       desc: [],
-      showtest: Cookies.get('result') ? false : true
     };
   },
   methods: {
     reTest(){
       Cookies.remove('result')
       this.$emit('retest')
-      
     }
   },
   components: {

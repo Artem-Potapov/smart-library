@@ -2,7 +2,7 @@
 <div>
     <a-card style="margin: 30px">
       <span slot="title" :class="{ error: iserror && !genres.length }"
-        >Какой жанр вам нравится?</span
+        >Какие жанры вам нравятся?</span
       >
       <a-checkbox :disabled="genres[0] == 'all'" :checked="genres.includes(genre)" @change="(e) => genreChange(e, genre)" v-for="genre in allGenres" :key="genre">{{genre}}</a-checkbox>
       <a-checkbox @change="(e) => genreChange(e, 'all')">Я не знаю</a-checkbox>

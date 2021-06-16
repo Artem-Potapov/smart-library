@@ -7,16 +7,12 @@
       :style="{ overflow: 'auto', height: '100vh', position: 'fixed', left: 0 }"
     >
       <div class="logo" />
-      <a-menu theme="dark" mode="inline" :default-selected-keys="['1']">
+      <a-menu theme="dark" mode="inline" :default-selected-keys="[defaultselecteditem]">
         <a-menu-item key="1" @click="$router.history.current.path!='/' && $router.push('/')">
           <a-icon type="book" />
           <span>Books</span>
         </a-menu-item>
-        <a-menu-item key="2" @click="$router.history.current.path!='/about' && $router.push('/about')">
-          <a-icon type="user" />
-          <span>Profile</span>
-        </a-menu-item>
-        <a-menu-item key="3" @click="$router.history.current.path!='/favorite' && $router.push('/favorite')">
+        <a-menu-item key="2" @click="$router.history.current.path!='/favorite' && $router.push('/favorite')" >
           <a-icon type="star" />
           <span>Your favourites</span>
         </a-menu-item>
@@ -49,14 +45,22 @@ export default {
   components: {},
   data() {
     return {
-
+      defaultselecteditem: this.changeItem(),
     };
   },
-  // methods: {
-  //     handleSizeChange(e) {
-  //       this.size = e.target.value;
-  //     },
-  //   },
+  methods: {
+    changeItem() {
+
+      switch(window.location.pathname){
+        case '/favorite': 
+          return '2'
+        case '/':
+          return '1'
+        default:
+          return ''
+      }
+    }
+  },
 
 };
 
