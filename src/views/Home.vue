@@ -102,16 +102,16 @@ Vue.use(Select);
 export default {
   name: "Home",
   mounted() {
-    this.$axios.get("http://musaev-online:5000/books").then((res) => {
+    this.$axios.get("https://musaev.online:5000/books").then((res) => {
       this.books = res.data;
     });
-    this.$axios.get("http://musaev-online:5000/authors").then((res) => {
+    this.$axios.get("https://musaev.online:5000/authors").then((res) => {
       this.authors = res.data;
     });
-    this.$axios.get("http://musaev-online:5000/genres").then((res) => {
+    this.$axios.get("https://musaev.online:5000/genres").then((res) => {
       this.genres = res.data;
     });
-    this.$axios.get("http://musaev-online:5000/ages").then((res) => {
+    this.$axios.get("https://musaev.online:5000/ages").then((res) => {
       this.ages = res.data;
     });
   },
@@ -119,7 +119,7 @@ export default {
   methods: {
     filter() {
       this.$axios
-        .get("http://musaev-online:5000/books", {
+        .get("https://musaev.online:5000/books", {
           params: { filters: this.filters },
         })
         .then((res) => {
